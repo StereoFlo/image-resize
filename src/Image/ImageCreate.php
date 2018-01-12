@@ -11,7 +11,7 @@ use ImageResize\Image\ImageType\Png;
 class ImageCreate
 {
     /**
-     * @var resource
+     * @var AbstractImage
      */
     private $image;
 
@@ -23,20 +23,20 @@ class ImageCreate
     {
         switch ($imageInfo->getType()) {
             case IMAGETYPE_JPEG:
-                $this->image = $this->createImage(new Jpg($imageInfo->getPath()));
+                $this->image = $this->createImage(new Jpg($imageInfo->getPath(), $imageInfo));
                 break;
             case IMAGETYPE_GIF:
-                $this->image = $this->createImage(new Gif($imageInfo->getPath()));
+                $this->image = $this->createImage(new Gif($imageInfo->getPath(), $imageInfo));
                 break;
             case IMAGETYPE_PNG:
-                $this->image = $this->createImage(new Png($imageInfo->getPath()));
+                $this->image = $this->createImage(new Png($imageInfo->getPath(), $imageInfo));
                 break;
         }
     }
 
     /**
      * @param AbstractImage $image
-     * @return resource
+     * @return AbstractImage
      */
     public function createImage(AbstractImage $image)
     {
@@ -44,7 +44,7 @@ class ImageCreate
     }
 
     /**
-     * @return resource
+     * @return AbstractImage
      */
     public function getImage()
     {

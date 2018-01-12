@@ -5,7 +5,7 @@ namespace ImageResize;
 use ImageResize\Image\ImageInfo;
 use ImageResize\Image\ImageCreate;
 use ImageResize\Image\ImageResizer;
-use ImageResize\Image\ImageSave;
+use ImageResize\Image\ImageType\AbstractImage;
 
 /**
  * Class Image
@@ -13,7 +13,7 @@ use ImageResize\Image\ImageSave;
 class Image
 {
     /**
-     * @var resource
+     * @var AbstractImage
      */
     private $image;
 
@@ -37,9 +37,8 @@ class Image
         if (!\file_exists($imagePath)) {
             throw new \Exception('specified file: ' . $imagePath . ' is not exist');
         }
-        $this->imageInfo = new ImageInfo($imagePath);
-        $this->image = (new ImageCreate($this->imageInfo))->getImage();
-        $this->resizer = new ImageResizer($this->image, $this->imageInfo);
+        $this->image = (new ImageCreate(new ImageInfo($imagePath)));
+        $this->resizer = new ImageResizer($this->image->getImage());
         return $this;
     }
 
@@ -49,7 +48,7 @@ class Image
      */
     public function resizeToHeight(int $height): self
     {
-        $this->image = $this->resizer->resizeToHeight($height)->getImage();
+        $this->image->setResizedImage($this->resizer->resizeToHeight($height));
         return $this;
     }
 
@@ -59,7 +58,7 @@ class Image
      */
     public function resizeToWidth(int $width): self
     {
-        $this->image = $this->resizer->resizeToWidth($width)->getImage();
+        $this->image->setResizedImage($this->resizer->resizeToWidth($width));
         return $this;
     }
 
@@ -70,7 +69,7 @@ class Image
      */
     public function resize(int $width, int $height): self
     {
-        $this->image = $this->resizer->resize($width, $height)->getImage();
+        $this->image->setResizedImage($this->resizer->resize($width, $height));
         return $this;
     }
 
@@ -80,20 +79,19 @@ class Image
      */
     public function resizeScale(int $scale): self
     {
-        $this->image = $this->resizer->scale($scale)->getImage();
+        $this->image->setResizedImage($this->resizer->scale($scale));
         return $this;
     }
 
     /**
      * @param string $filename
      * @param int $compression
-     * @param int $permissions
      * @return bool
      * @throws \Exception
      */
-    public function save(string $filename, int $compression = 75, int $permissions = 0): bool
+    public function save(string $filename, int $compression = 75): bool
     {
-        return ImageSave::create($this->image, $this->imageInfo)->save($filename, $compression, $permissions);
+        return $this->image->setCompression($compression)->setFileName($filename)->save();
     }
 
     /**
@@ -103,7 +101,7 @@ class Image
      */
     public function send(int $compression = 75)
     {
-        return ImageSave::create($this->image, $this->imageInfo)->send($compression);
+        return $this->image->setCompression($compression)->save(true);
     }
 
     /**

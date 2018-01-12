@@ -9,10 +9,24 @@ namespace ImageResize\Image\ImageType;
 class Gif extends AbstractImage
 {
     /**
-     * @return resource
+     * @return self
      */
     public function createImage()
     {
-        return \imagecreatefromgif($this->filePath);
+        $this->image = \imagecreatefromgif($this->filePath);
+        return $this;
+    }
+
+    /**
+     * @param bool $toBrowser
+     * @return mixed
+     */
+    public function save($toBrowser = false)
+    {
+        if ($toBrowser) {
+            $this->getHeader($this->getImageInfo()->getMimeType());
+            imagegif($this->image);
+        }
+        return imagegif($this->image, $this->fileName);
     }
 }

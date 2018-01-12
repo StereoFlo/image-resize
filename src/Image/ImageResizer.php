@@ -1,6 +1,7 @@
 <?php
 
 namespace ImageResize\Image;
+use ImageResize\Image\ImageType\AbstractImage;
 
 /**
  * Class ImageResizer
@@ -9,77 +10,61 @@ namespace ImageResize\Image;
 class ImageResizer
 {
     /**
-     * @var resource
+     * @var AbstractImage
      */
     private $image;
 
     /**
-     * @var ImageInfo
-     */
-    private $imageInfo;
-
-    /**
      * ImageResizer constructor.
-     * @param $image
-     * @param ImageInfo $imageInfo
+     * @param AbstractImage $image
      */
-    public function __construct($image, ImageInfo $imageInfo)
+    public function __construct(AbstractImage $image)
     {
         $this->image = $image;
-        $this->imageInfo = $imageInfo;
     }
 
     /**
      * @param int $height
-     * @return self
+     * @return resource
      */
-    public function resizeToHeight(int $height): self
+    public function resizeToHeight(int $height)
     {
-        $ratio = $height / $this->imageInfo->getHeight();
-        $width = $this->imageInfo->getWidth() * $ratio;
+        $ratio = $height / $this->image->getImageInfo()->getHeight();
+        $width = $this->image->getImageInfo()->getWidth() * $ratio;
         return $this->resize($width, $height);
     }
 
     /**
      * @param int $width
-     * @return self
+     * @return resource
      */
-    public function resizeToWidth(int $width): self
+    public function resizeToWidth(int $width)
     {
-        $ratio = $width / $this->imageInfo->getWidth();
-        $height = $this->imageInfo->getheight() * $ratio;
+        $ratio = $width / $this->image->getImageInfo()->getWidth();
+        $height = $this->image->getImageInfo()->getheight() * $ratio;
         return $this->resize($width, $height);
     }
 
     /**
      * @param int $scale
-     * @return self
+     * @return resource
      */
-    public function scale(int $scale): self
+    public function scale(int $scale)
     {
-        $width = $this->imageInfo->getWidth() * $scale / 100;
-        $height = $this->imageInfo->getheight() * $scale / 100;
+        $width = $this->image->getImageInfo()->getWidth() * $scale / 100;
+        $height = $this->image->getImageInfo()->getheight() * $scale / 100;
         return $this->resize($width, $height);
     }
 
     /**
      * @param int $width
      * @param int $height
-     * @return $this
-     */
-    public function resize(int $width, int $height): self
-    {
-        $newImage = \imagecreatetruecolor($width, $height);
-        \imagecopyresampled($newImage, $this->image, 0, 0, 0, 0, $width, $height, $this->imageInfo->getWidth(), $this->imageInfo->getHeight());
-        $this->image = $newImage;
-        return $this;
-    }
-
-    /**
      * @return resource
      */
-    public function getImage()
+    public function resize(int $width, int $height)
     {
-        return $this->image;
+        $newImage = \imagecreatetruecolor($width, $height);
+        \imagecopyresampled($newImage, $this->image->getImage(), 0, 0, 0, 0, $width, $height, $this->image->getImageInfo()->getWidth(), $this->image->getImageInfo()->getHeight());
+        return $newImage;
     }
 }
