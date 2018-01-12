@@ -87,6 +87,11 @@ class ImageSave
         }
     }
 
+    /**
+     * Sets an header for browser
+     *
+     * @param string $mime
+     */
     private function getHeader(string $mime)
     {
         header('Content-Type: ' . $mime);

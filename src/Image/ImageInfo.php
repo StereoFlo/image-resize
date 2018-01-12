@@ -11,53 +11,53 @@ class ImageInfo
     /**
      * @var string
      */
-    protected $path = '';
+    private $path = '';
 
     /**
      * All info by image
      * @var array
      */
-    protected $allInfo = [];
+    private $allInfo = [];
 
     /**
      * width of image
      * @var int
      */
-    protected $width = 0;
+    private $width = 0;
 
     /**
      * Height of image
      * @var int
      */
-    protected $height = 0;
+    private $height = 0;
 
     /**
      * type of image
      * @var int
      */
-    protected $type = 0;
+    private $type = 0;
 
     /**
      * html attributes
      * @var string
      */
-    protected $attributes = '';
+    private $attributes = '';
 
     /**
      * @var int
      */
-    protected $bits = 0;
+    private $bits = 0;
 
     /**
      * @var int
      */
-    protected $channels = 0;
+    private $channels = 0;
 
     /**
      * mime type of image
      * @var string
      */
-    protected $mimeType = '';
+    private $mimeType = '';
 
     /**
      * ImageInfo constructor.
