@@ -15,22 +15,24 @@ class ImageCreate
      */
     private $image;
 
+    public static function create(ImageInfo $imageInfo)
+    {
+        return (new self())->load($imageInfo);
+    }
+
     /**
-     * ImageCreate constructor.
      * @param ImageInfo $imageInfo
+     * @return AbstractImage
      */
-    public function __construct(ImageInfo $imageInfo)
+    public function load(ImageInfo $imageInfo)
     {
         switch ($imageInfo->getType()) {
             case IMAGETYPE_JPEG:
-                $this->image = $this->createImage(new Jpg($imageInfo->getPath(), $imageInfo));
-                break;
+                return $this->createImage(new Jpg($imageInfo->getPath(), $imageInfo));
             case IMAGETYPE_GIF:
-                $this->image = $this->createImage(new Gif($imageInfo->getPath(), $imageInfo));
-                break;
+                return $this->createImage(new Gif($imageInfo->getPath(), $imageInfo));
             case IMAGETYPE_PNG:
-                $this->image = $this->createImage(new Png($imageInfo->getPath(), $imageInfo));
-                break;
+                return $this->createImage(new Png($imageInfo->getPath(), $imageInfo));
         }
     }
 

@@ -9,11 +9,12 @@ namespace ImageResize\Image\ImageType;
 class Jpg extends AbstractImage
 {
     /**
-     * @return resource
+     * @return self
      */
     public function createImage()
     {
-        return \imagecreatefromjpeg($this->filePath);
+        $this->image = \imagecreatefromjpeg($this->filePath);
+        return $this;
     }
 
     /**

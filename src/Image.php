@@ -37,8 +37,8 @@ class Image
         if (!\file_exists($imagePath)) {
             throw new \Exception('specified file: ' . $imagePath . ' is not exist');
         }
-        $this->image = (new ImageCreate(new ImageInfo($imagePath)));
-        $this->resizer = new ImageResizer($this->image->getImage());
+        $this->image = ImageCreate::create(new ImageInfo($imagePath));
+        $this->resizer = new ImageResizer($this->image);
         return $this;
     }
 

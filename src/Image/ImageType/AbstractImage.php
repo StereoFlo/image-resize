@@ -31,8 +31,6 @@ abstract class AbstractImage
     protected $fileName;
 
     /**
-     * @var int
-     */
     protected $compression = 0;
 
     /**
@@ -115,18 +113,8 @@ abstract class AbstractImage
     /**
      * @return resource
      */
-    public function getResizedImage()
+    public function getResizedImage(): resource
     {
         return $this->resizedImage;
-    }
-
-    /**
-     * @param int $compression
-     * @return AbstractImage
-     */
-    public function setCompression(int $compression): AbstractImage
-    {
-        $this->compression = $compression;
-        return $this;
     }
 }
