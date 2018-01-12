@@ -31,12 +31,16 @@ abstract class AbstractImage
     protected $fileName;
 
     /**
+     * @var int
+     */
     protected $compression = 0;
 
     /**
      * @var resource
      */
     protected $resizedImage;
+
+
 
     /**
      * AbstractImage constructor.
@@ -46,6 +50,7 @@ abstract class AbstractImage
     public function __construct(string $filePath, ImageInfo $imageInfo)
     {
         $this->filePath = $filePath;
+        $this->imageInfo = $imageInfo;
     }
 
     /**
@@ -104,7 +109,7 @@ abstract class AbstractImage
      * @param resource $resizedImage
      * @return AbstractImage
      */
-    public function setResizedImage(resource $resizedImage): AbstractImage
+    public function setResizedImage($resizedImage): AbstractImage
     {
         $this->resizedImage = $resizedImage;
         return $this;
@@ -116,5 +121,15 @@ abstract class AbstractImage
     public function getResizedImage(): resource
     {
         return $this->resizedImage;
+    }
+
+    /**
+     * @param int $compression
+     * @return AbstractImage
+     */
+    public function setCompression(int $compression): AbstractImage
+    {
+        $this->compression = $compression;
+        return $this;
     }
 }
