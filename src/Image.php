@@ -28,6 +28,18 @@ class Image
     private $resizer;
 
     /**
+     * Static call
+     *
+     * @param string $imagePath
+     *
+     * @return Image
+     */
+    public static function create(string $imagePath)
+    {
+        return new self($imagePath);
+    }
+
+    /**
      * Image constructor.
      * @param string $imagePath
      * @throws \Exception
