@@ -40,8 +40,6 @@ abstract class AbstractImage
      */
     protected $resizedImage;
 
-
-
     /**
      * AbstractImage constructor.
      * @param string $filePath
@@ -60,14 +58,9 @@ abstract class AbstractImage
 
     /**
      * @param bool $toBrowser
-     * @return mixed
+     * @return bool
      */
     abstract public function save($toBrowser = false);
-
-    public function getHeader(string $mimeType)
-    {
-        header('Content-Type: ' . $mimeType);
-    }
 
     /**
      * @param string $fileName
@@ -96,40 +89,30 @@ abstract class AbstractImage
     }
 
     /**
-     * @param resource $image
-     * @return AbstractImage
-     */
-    public function setImage($image): self
-    {
-        $this->image = $image;
-        return $this;
-    }
-
-    /**
      * @param resource $resizedImage
-     * @return AbstractImage
+     * @return self
      */
-    public function setResizedImage($resizedImage): AbstractImage
+    public function setResizedImage($resizedImage): self
     {
         $this->resizedImage = $resizedImage;
         return $this;
     }
 
     /**
-     * @return resource
-     */
-    public function getResizedImage(): resource
-    {
-        return $this->resizedImage;
-    }
-
-    /**
      * @param int $compression
-     * @return AbstractImage
+     * @return self
      */
-    public function setCompression(int $compression): AbstractImage
+    public function setCompression(int $compression): self
     {
         $this->compression = $compression;
         return $this;
+    }
+
+    /**
+     * @param string $mimeType
+     */
+    protected function setHeader(string $mimeType)
+    {
+        \header('Content-Type: ' . $mimeType);
     }
 }

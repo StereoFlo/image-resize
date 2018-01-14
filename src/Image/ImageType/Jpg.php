@@ -11,7 +11,7 @@ class Jpg extends AbstractImage
     /**
      * @return self
      */
-    public function createImage()
+    public function createImage(): self
     {
         $this->image = \imagecreatefromjpeg($this->filePath);
         return $this;
@@ -19,14 +19,14 @@ class Jpg extends AbstractImage
 
     /**
      * @param bool $toBrowser
-     * @return mixed
+     * @return bool
      */
     public function save($toBrowser = false)
     {
         if ($toBrowser) {
-            $this->getHeader($this->getImageInfo()->getMimeType());
-            imagejpeg($this->image, null, $this->compression);
+            $this->setHeader($this->getImageInfo()->getMimeType());
+            return \imagejpeg($this->resizedImage, null, $this->compression);
         }
-        return imagejpeg($this->image, $this->fileName, $this->compression);
+        return \imagejpeg($this->resizedImage, $this->fileName, $this->compression);
     }
 }

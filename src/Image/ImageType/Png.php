@@ -9,23 +9,24 @@ namespace ImageResize\Image\ImageType;
 class Png extends AbstractImage
 {
     /**
-     * @return resource
+     * @return self
      */
-    public function createImage()
+    public function createImage(): self
     {
-        return \imagecreatefrompng($this->filePath);
+        $this->image = \imagecreatefrompng($this->filePath);
+        return $this;
     }
 
     /**
      * @param bool $toBrowser
      * @return bool
      */
-    public function save($toBrowser = false)
+    public function save($toBrowser = false):bool
     {
         if ($toBrowser) {
-            $this->getHeader($this->getImageInfo()->getMimeType());
-            imagepng($this->image, null, $this->compression);
+            $this->setHeader($this->getImageInfo()->getMimeType());
+            return \imagepng($this->resizedImage, null, $this->compression);
         }
-        return imagepng($this->image, $this->fileName, $this->compression);
+        return \imagepng($this->resizedImage, $this->fileName, $this->compression);
     }
 }

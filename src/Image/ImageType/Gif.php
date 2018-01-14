@@ -11,7 +11,7 @@ class Gif extends AbstractImage
     /**
      * @return self
      */
-    public function createImage()
+    public function createImage(): self
     {
         $this->image = \imagecreatefromgif($this->filePath);
         return $this;
@@ -19,14 +19,14 @@ class Gif extends AbstractImage
 
     /**
      * @param bool $toBrowser
-     * @return mixed
+     * @return bool
      */
-    public function save($toBrowser = false)
+    public function save($toBrowser = false): bool
     {
         if ($toBrowser) {
-            $this->getHeader($this->getImageInfo()->getMimeType());
-            imagegif($this->image);
+            $this->setHeader($this->getImageInfo()->getMimeType());
+            return \imagegif($this->resizedImage);
         }
-        return imagegif($this->image, $this->fileName);
+        return imagegif($this->resizedImage, $this->fileName);
     }
 }
