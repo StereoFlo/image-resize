@@ -7,14 +7,16 @@ use ImageResize\Image\ImageType\AbstractImage;
 use ImageResize\Image\ImageType\Gif;
 use ImageResize\Image\ImageType\Jpg;
 use ImageResize\Image\ImageType\Png;
+use ImageResize\Image\ImageType\Wbmp;
 
 class ImageCreate
 {
     /**
-     * @var AbstractImage
+     * @param ImageInfo $imageInfo
+     *
+     * @return AbstractImage
+     * @throws \Exception
      */
-    private $image;
-
     public static function create(ImageInfo $imageInfo)
     {
         return (new self())->load($imageInfo);
@@ -22,17 +24,23 @@ class ImageCreate
 
     /**
      * @param ImageInfo $imageInfo
+     *
      * @return AbstractImage
+     * @throws \Exception
      */
     public function load(ImageInfo $imageInfo)
     {
         switch ($imageInfo->getType()) {
             case IMAGETYPE_JPEG:
-                return $this->createImage(new Jpg($imageInfo->getPath(), $imageInfo));
+                return $this->createImage(new Jpg($imageInfo));
             case IMAGETYPE_GIF:
-                return $this->createImage(new Gif($imageInfo->getPath(), $imageInfo));
+                return $this->createImage(new Gif($imageInfo));
             case IMAGETYPE_PNG:
-                return $this->createImage(new Png($imageInfo->getPath(), $imageInfo));
+                return $this->createImage(new Png($imageInfo));
+            case IMAGETYPE_WBMP:
+                return $this->createImage(new Wbmp($imageInfo));
+            default:
+                throw new \Exception('Image type is not supported');
         }
     }
 
@@ -40,16 +48,8 @@ class ImageCreate
      * @param AbstractImage $image
      * @return AbstractImage
      */
-    public function createImage(AbstractImage $image)
+    private function createImage(AbstractImage $image)
     {
         return $image->createImage();
-    }
-
-    /**
-     * @return AbstractImage
-     */
-    public function getImage()
-    {
-        return $this->image;
     }
 }

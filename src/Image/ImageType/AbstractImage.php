@@ -42,12 +42,12 @@ abstract class AbstractImage
 
     /**
      * AbstractImage constructor.
-     * @param string $filePath
+     *
      * @param ImageInfo $imageInfo
      */
-    public function __construct(string $filePath, ImageInfo $imageInfo)
+    public function __construct(ImageInfo $imageInfo)
     {
-        $this->filePath = $filePath;
+        $this->filePath = $imageInfo->getPath();
         $this->imageInfo = $imageInfo;
     }
 
