@@ -23,8 +23,9 @@ class ImageCreate
     }
 
     /**
-     * @param ImageInfo $imageInfo
+     * Load an image resource
      *
+     * @param ImageInfo $imageInfo
      * @return AbstractImage
      * @throws \Exception
      */
@@ -40,7 +41,7 @@ class ImageCreate
             case IMAGETYPE_WBMP:
                 return $this->createImage(new Wbmp($imageInfo));
             default:
-                throw new \Exception('Image type is not supported');
+                throw new \Exception('the image type is not supported');
         }
     }
 
