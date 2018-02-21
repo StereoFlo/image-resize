@@ -26,7 +26,7 @@ class Gif extends AbstractImage
         if ($toBrowser) {
             $this->setHeader($this->getImageInfo()->getMimeType());
             if (empty($this->resizedImage)) {
-                return \imagejpeg($this->image, null, $this->compression);
+                return \readfile($this->image, null, $this->compression);
             }
             return \imagegif($this->resizedImage);
         }
