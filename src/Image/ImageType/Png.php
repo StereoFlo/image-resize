@@ -25,9 +25,6 @@ class Png extends AbstractImage
     {
         if ($toBrowser) {
             $this->setHeader($this->getImageInfo()->getMimeType());
-            if (empty($this->resizedImage)) {
-                return \readfile($this->image, null, $this->compression);
-            }
             return \imagepng($this->resizedImage, null, $this->compression);
         }
         return \imagepng($this->resizedImage, $this->fileName, $this->compression);

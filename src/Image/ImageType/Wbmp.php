@@ -25,9 +25,6 @@ class Wbmp extends AbstractImage
     {
         if ($toBrowser) {
             $this->setHeader($this->getImageInfo()->getMimeType());
-            if (empty($this->resizedImage)) {
-                return \readfile($this->image, null, $this->compression);
-            }
             return \imagewbmp($this->resizedImage);
         }
         return \imagewbmp($this->resizedImage, $this->fileName);

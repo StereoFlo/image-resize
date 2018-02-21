@@ -32,9 +32,10 @@ class Image
      *
      * @param string $imagePath
      *
-     * @return Image
+     * @return self
+     * @throws \Exception
      */
-    public static function create(string $imagePath)
+    public static function create(string $imagePath): self
     {
         return new self($imagePath);
     }
@@ -49,7 +50,8 @@ class Image
         if (!\file_exists($imagePath)) {
             throw new \Exception('specified file: ' . $imagePath . ' is not exist');
         }
-        $this->image = ImageCreate::create(new ImageInfo($imagePath));
+        $this->imageInfo = new ImageInfo($imagePath);
+        $this->image = ImageCreate::create($this->imageInfo);
         $this->resizer = new ImageResizer($this->image);
         return $this;
     }
@@ -111,7 +113,7 @@ class Image
      * @return bool
      * @throws \Exception
      */
-    public function send(int $compression = 75)
+    public function send(int $compression = 75): bool
     {
         return $this->image->setCompression($compression)->save(true);
     }
