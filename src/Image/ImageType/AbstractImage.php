@@ -109,10 +109,11 @@ abstract class AbstractImage
     }
 
     /**
-     * @param string $mimeType
+     * @param string $key
+     * @param string $val
      */
-    protected function setHeader(string $mimeType)
+    protected function setHeader(string $key, string $val)
     {
-        \header('Content-Type: ' . $mimeType);
+        \header($key . ': ' . $val);
     }
 }

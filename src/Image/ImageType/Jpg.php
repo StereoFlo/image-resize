@@ -24,7 +24,13 @@ class Jpg extends AbstractImage
     public function save($toBrowser = false)
     {
         if ($toBrowser) {
-            $this->setHeader($this->getImageInfo()->getMimeType());
+            $this->setHeader('Content-Type', $this->getImageInfo()->getMimeType());
+            $this->setHeader('Content-Length', $this->getImageInfo()->getFileSize());
+
+            //return a cached image. do you think is not fight? fix it!
+            if (empty($this->resizedImage)) {
+                return \imagejpeg($this->image);
+            }
             return \imagejpeg($this->resizedImage, null, $this->compression);
         }
         return \imagejpeg($this->resizedImage, $this->fileName, $this->compression);

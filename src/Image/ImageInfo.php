@@ -60,6 +60,11 @@ class ImageInfo
     private $mimeType = '';
 
     /**
+     * @var int
+     */
+    private $fileSize = 0;
+
+    /**
      * ImageInfo constructor.
      * @param string $filePath
      * @throws \Exception
@@ -78,6 +83,7 @@ class ImageInfo
         if (isset($this->allInfo['mime']) && !empty($this->allInfo['mime'])) {
             $this->mimeType = $this->allInfo['mime'];
         }
+        $this->fileSize = \filesize($filePath);
     }
 
     /**
@@ -150,6 +156,14 @@ class ImageInfo
     public function getPath(): string
     {
         return $this->path;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFileSize(): int
+    {
+        return $this->fileSize;
     }
 
     /**
