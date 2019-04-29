@@ -1,7 +1,9 @@
 {
   "name": "stereoflo/image-resize",
-  "type": "project",
+  "type": "library",
+  "description": "simple image resize for PHP 7",
   "license": "MIT",
+  "version": "0.1",
   "authors": [
     {
       "name": "Stereoflo",
