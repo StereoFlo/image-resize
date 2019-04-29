@@ -2,6 +2,10 @@
 
 namespace ImageResize\Image;
 
+use Exception;
+use function filesize;
+use function getimagesize;
+
 /**
  * Class ImageInfo
  * @package ImageResize\Image
@@ -67,7 +71,7 @@ class ImageInfo
     /**
      * ImageInfo constructor.
      * @param string $filePath
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(string $filePath)
     {
@@ -83,7 +87,7 @@ class ImageInfo
         if (isset($this->allInfo['mime']) && !empty($this->allInfo['mime'])) {
             $this->mimeType = $this->allInfo['mime'];
         }
-        $this->fileSize = \filesize($filePath);
+        $this->fileSize = filesize($filePath);
     }
 
     /**
@@ -169,13 +173,13 @@ class ImageInfo
     /**
      * @param string $filePath
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getInfo(string $filePath): array
     {
-        $imageInfo = \getimagesize($filePath);
+        $imageInfo = getimagesize($filePath);
         if (empty($imageInfo)) {
-            throw new \Exception('cannot read image info');
+            throw new Exception('cannot read image info');
         }
         return $imageInfo;
     }
