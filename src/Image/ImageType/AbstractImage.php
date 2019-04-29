@@ -2,13 +2,14 @@
 
 namespace ImageResize\Image\ImageType;
 
+use function header;
 use ImageResize\Image\ImageInfo;
 
 /**
  * Class AbstractImage
  * @package ImageResize\Image\ImageType
  */
-abstract class AbstractImage
+abstract class AbstractImage implements ImageInterface
 {
     /**
      * @var string
@@ -114,6 +115,6 @@ abstract class AbstractImage
      */
     protected function setHeader(string $key, string $val)
     {
-        \header($key . ': ' . $val);
+        header($key . ': ' . $val);
     }
 }

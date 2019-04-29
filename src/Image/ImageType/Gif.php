@@ -2,6 +2,9 @@
 
 namespace ImageResize\Image\ImageType;
 
+use function imagecreatefromgif;
+use function imagegif;
+
 /**
  * Class Gif
  * @package ImageResize\Image\ImageData
@@ -13,7 +16,7 @@ class Gif extends AbstractImage
      */
     public function createImage(): self
     {
-        $this->image = \imagecreatefromgif($this->filePath);
+        $this->image = imagecreatefromgif($this->filePath);
         return $this;
     }
 
@@ -29,9 +32,9 @@ class Gif extends AbstractImage
 
             //return a cached image. do you think is not fight? fix it!
             if (empty($this->resizedImage)) {
-                return \imagegif($this->image);
+                return imagegif($this->image);
             }
-            return \imagegif($this->resizedImage);
+            return imagegif($this->resizedImage);
         }
         return imagegif($this->resizedImage, $this->fileName);
     }

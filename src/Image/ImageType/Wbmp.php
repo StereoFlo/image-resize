@@ -2,6 +2,9 @@
 
 namespace ImageResize\Image\ImageType;
 
+use function imagecreatefromwbmp;
+use function imagewbmp;
+
 /**
  * Class Gif
  * @package ImageResize\Image\ImageData
@@ -13,7 +16,7 @@ class Wbmp extends AbstractImage
      */
     public function createImage(): self
     {
-        $this->image = \imagecreatefromwbmp($this->filePath);
+        $this->image = imagecreatefromwbmp($this->filePath);
         return $this;
     }
 
@@ -29,10 +32,10 @@ class Wbmp extends AbstractImage
 
             //return a cached image. do you think is not fight? fix it!
             if (empty($this->resizedImage)) {
-                return \imagewbmp($this->image);
+                return imagewbmp($this->image);
             }
-            return \imagewbmp($this->resizedImage);
+            return imagewbmp($this->resizedImage);
         }
-        return \imagewbmp($this->resizedImage, $this->fileName);
+        return imagewbmp($this->resizedImage, $this->fileName);
     }
 }

@@ -2,6 +2,9 @@
 
 namespace ImageResize\Image\ImageType;
 
+use function imagecreatefromjpeg;
+use function imagejpeg;
+
 /**
  * Class Jpg
  * @package ImageResize\Image\ImageData
@@ -13,7 +16,7 @@ class Jpg extends AbstractImage
      */
     public function createImage(): self
     {
-        $this->image = \imagecreatefromjpeg($this->filePath);
+        $this->image = imagecreatefromjpeg($this->filePath);
         return $this;
     }
 
@@ -29,10 +32,10 @@ class Jpg extends AbstractImage
 
             //return a cached image. do you think is not fight? fix it!
             if (empty($this->resizedImage)) {
-                return \imagejpeg($this->image);
+                return imagejpeg($this->image);
             }
-            return \imagejpeg($this->resizedImage, null, $this->compression);
+            return imagejpeg($this->resizedImage, null, $this->compression);
         }
-        return \imagejpeg($this->resizedImage, $this->fileName, $this->compression);
+        return imagejpeg($this->resizedImage, $this->fileName, $this->compression);
     }
 }

@@ -2,6 +2,9 @@
 
 namespace ImageResize\Image\ImageType;
 
+use function imagecreatefrompng;
+use function imagepng;
+
 /**
  * Class Png
  * @package ImageResize\Image\ImageData
@@ -13,7 +16,7 @@ class Png extends AbstractImage
      */
     public function createImage(): self
     {
-        $this->image = \imagecreatefrompng($this->filePath);
+        $this->image = imagecreatefrompng($this->filePath);
         return $this;
     }
 
@@ -29,10 +32,10 @@ class Png extends AbstractImage
 
             //return a cached image. do you think is not fight? fix it!
             if (empty($this->resizedImage)) {
-                return \imagepng($this->image);
+                return imagepng($this->image);
             }
-            return \imagepng($this->resizedImage, null, $this->compression);
+            return imagepng($this->resizedImage, null, $this->compression);
         }
-        return \imagepng($this->resizedImage, $this->fileName, $this->compression);
+        return imagepng($this->resizedImage, $this->fileName, $this->compression);
     }
 }

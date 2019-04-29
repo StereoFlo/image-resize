@@ -2,20 +2,25 @@
 
 namespace ImageResize\Image;
 
-
+use Exception;
 use ImageResize\Image\ImageType\AbstractImage;
 use ImageResize\Image\ImageType\Gif;
+use ImageResize\Image\ImageType\ImageInterface;
 use ImageResize\Image\ImageType\Jpg;
 use ImageResize\Image\ImageType\Png;
 use ImageResize\Image\ImageType\Wbmp;
 
+/**
+ * Class ImageCreate
+ * @package ImageResize\Image
+ */
 class ImageCreate
 {
     /**
      * @param ImageInfo $imageInfo
      *
      * @return AbstractImage
-     * @throws \Exception
+     * @throws Exception
      */
     public static function create(ImageInfo $imageInfo)
     {
@@ -27,9 +32,9 @@ class ImageCreate
      *
      * @param ImageInfo $imageInfo
      * @return AbstractImage
-     * @throws \Exception
+     * @throws Exception
      */
-    public function load(ImageInfo $imageInfo)
+    public function load(ImageInfo $imageInfo): ImageInterface
     {
         switch ($imageInfo->getType()) {
             case IMAGETYPE_JPEG:
@@ -41,7 +46,7 @@ class ImageCreate
             case IMAGETYPE_WBMP:
                 return $this->createImage(new Wbmp($imageInfo));
             default:
-                throw new \Exception('the image type is not supported');
+                throw new Exception('the image type is not supported');
         }
     }
 
@@ -49,7 +54,7 @@ class ImageCreate
      * @param AbstractImage $image
      * @return AbstractImage
      */
-    private function createImage(AbstractImage $image)
+    private function createImage(AbstractImage $image): ImageInterface
     {
         return $image->createImage();
     }
