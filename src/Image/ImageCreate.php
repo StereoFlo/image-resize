@@ -46,7 +46,7 @@ class ImageCreate
             case IMAGETYPE_WBMP:
                 return $this->createImage(new Wbmp($imageInfo));
             default:
-                throw new Exception('the image type is not supported');
+                throw new Exception('image type is not supported');
         }
     }
 

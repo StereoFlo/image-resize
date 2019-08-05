@@ -2,6 +2,8 @@
 
 namespace ImageResize\Image;
 use ImageResize\Image\ImageType\AbstractImage;
+use function imagecopyresampled;
+use function imagecreatetruecolor;
 
 /**
  * Class ImageResizer
@@ -63,8 +65,8 @@ class ImageResizer
      */
     public function resize(int $width, int $height)
     {
-        $newImage = \imagecreatetruecolor($width, $height);
-        \imagecopyresampled($newImage, $this->image->getImage(), 0, 0, 0, 0, $width, $height, $this->image->getImageInfo()->getWidth(), $this->image->getImageInfo()->getHeight());
+        $newImage = imagecreatetruecolor($width, $height);
+        imagecopyresampled($newImage, $this->image->getImage(), 0, 0, 0, 0, $width, $height, $this->image->getImageInfo()->getWidth(), $this->image->getImageInfo()->getHeight());
         return $newImage;
     }
 }

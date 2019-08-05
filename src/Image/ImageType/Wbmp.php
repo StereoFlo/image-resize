@@ -27,8 +27,7 @@ class Wbmp extends AbstractImage
     public function save($toBrowser = false): bool
     {
         if ($toBrowser) {
-            $this->setHeader('Content-Type', $this->getImageInfo()->getMimeType());
-            $this->setHeader('Content-Length', $this->getImageInfo()->getFileSize());
+            $this->setConcreteHeaders();
 
             //return a cached image. do you think is not fight? fix it!
             if (empty($this->resizedImage)) {

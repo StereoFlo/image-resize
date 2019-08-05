@@ -11,6 +11,9 @@ use ImageResize\Image\ImageInfo;
  */
 abstract class AbstractImage implements ImageInterface
 {
+    const CONTENT_TYPE = 'Content-Type';
+    const CONTENT_LENGTH = 'Content-Length';
+
     /**
      * @var string
      */
@@ -116,5 +119,14 @@ abstract class AbstractImage implements ImageInterface
     protected function setHeader(string $key, string $val)
     {
         header($key . ': ' . $val);
+    }
+
+    /**
+     * @return void
+     */
+    protected function setConcreteHeaders()
+    {
+        $this->setHeader(self::CONTENT_TYPE, $this->getImageInfo()->getMimeType());
+        $this->setHeader(self::CONTENT_LENGTH, $this->getImageInfo()->getFileSize());
     }
 }
