@@ -2,10 +2,13 @@
 
 namespace ImageResize;
 
+use Exception;
+use ImageResize\Exceptions\FileNotFoundException;
 use ImageResize\Image\ImageInfo;
 use ImageResize\Image\ImageCreate;
 use ImageResize\Image\ImageResizer;
 use ImageResize\Image\ImageType\AbstractImage;
+use function file_exists;
 
 /**
  * Class Image
@@ -33,7 +36,7 @@ class Image
      * @param string $imagePath
      *
      * @return self
-     * @throws \Exception
+     * @throws Exception
      */
     public static function create(string $imagePath): self
     {
@@ -43,12 +46,12 @@ class Image
     /**
      * Image constructor.
      * @param string $imagePath
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(string $imagePath)
     {
-        if (!\file_exists($imagePath)) {
-            throw new \Exception('specified file: ' . $imagePath . ' is not exist');
+        if (!file_exists($imagePath)) {
+            throw new FileNotFoundException('specified file: ' . $imagePath . ' is not exist');
         }
         $this->imageInfo = new ImageInfo($imagePath);
         $this->image = ImageCreate::create($this->imageInfo);
@@ -94,6 +97,7 @@ class Image
     public function resizeScale(int $scale): self
     {
         $this->image->setResizedImage($this->resizer->scale($scale));
+
         return $this;
     }
 
@@ -101,7 +105,7 @@ class Image
      * @param string $filename
      * @param int $compression
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function save(string $filename, int $compression = 75): bool
     {
@@ -111,7 +115,7 @@ class Image
     /**
      * @param int $compression
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function send(int $compression = 75): bool
     {

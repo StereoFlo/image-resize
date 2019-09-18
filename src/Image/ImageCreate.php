@@ -3,6 +3,7 @@
 namespace ImageResize\Image;
 
 use Exception;
+use ImageResize\Exceptions\InvalidTypeException;
 use ImageResize\Image\ImageType\AbstractImage;
 use ImageResize\Image\ImageType\Gif;
 use ImageResize\Image\ImageType\ImageInterface;
@@ -46,7 +47,7 @@ class ImageCreate
             case IMAGETYPE_WBMP:
                 return $this->createImage(new Wbmp($imageInfo));
             default:
-                throw new Exception('image type is not supported');
+                throw new InvalidTypeException('image type is not supported');
         }
     }
 

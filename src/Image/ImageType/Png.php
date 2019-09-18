@@ -2,6 +2,8 @@
 
 namespace ImageResize\Image\ImageType;
 
+use ImageResize\Exceptions\InvalidRangeException;
+use function ceil;
 use function imagecreatefrompng;
 use function imagepng;
 
@@ -22,10 +24,14 @@ class Png extends AbstractImage
 
     /**
      * @param bool $toBrowser
+     *
      * @return bool
+     *
+     * @throws InvalidRangeException
      */
     public function save($toBrowser = false):bool
     {
+        $this->calcCompression();
         if ($toBrowser) {
             $this->setConcreteHeaders();
 
@@ -36,5 +42,18 @@ class Png extends AbstractImage
             return imagepng($this->resizedImage, null, $this->compression);
         }
         return imagepng($this->resizedImage, $this->fileName, $this->compression);
+    }
+
+    /**
+     * @throws InvalidRangeException
+     */
+    private function calcCompression(): void
+    {
+        if ($this->compression < -1) {
+            throw new InvalidRangeException('compression for PNG type must be in range from 0 to 9. Default value is -1');
+        }
+        if ($this->compression > 9) {
+            $this->compression = (int)ceil($this->compression / 10);
+        }
     }
 }

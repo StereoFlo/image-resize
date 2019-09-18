@@ -2,8 +2,11 @@
 
 namespace ImageResize\Image\ImageType;
 
+use ImageResize\Exceptions\InvalidRangeException;
 use function header;
 use ImageResize\Image\ImageInfo;
+use function in_array;
+use function range;
 
 /**
  * Class AbstractImage
@@ -105,10 +108,16 @@ abstract class AbstractImage implements ImageInterface
     /**
      * @param int $compression
      * @return self
+     * @throws InvalidRangeException
      */
     public function setCompression(int $compression): self
     {
+        if (!in_array($compression, range(1, 100))) {
+            throw new InvalidRangeException('quality must be in range from 1 to 100');
+        }
+
         $this->compression = $compression;
+
         return $this;
     }
 

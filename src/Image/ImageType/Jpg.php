@@ -2,6 +2,7 @@
 
 namespace ImageResize\Image\ImageType;
 
+use ImageResize\Exceptions\InvalidRangeException;
 use function imagecreatefromjpeg;
 use function imagejpeg;
 
@@ -22,10 +23,16 @@ class Jpg extends AbstractImage
 
     /**
      * @param bool $toBrowser
+     *
      * @return bool
+     *
+     * @throws InvalidRangeException
      */
     public function save($toBrowser = false)
     {
+        if ($this->compression < 1 || $this->compression > 100) {
+            throw new InvalidRangeException('compression for PNG type must be in range from 0 to 9. Default value is -1');
+        }
         if ($toBrowser) {
             $this->setConcreteHeaders();
 
